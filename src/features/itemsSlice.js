@@ -12,7 +12,8 @@ export const itemsSlice = createSlice({
     },
     minPrice: 0,
     maxPrice: undefined,
-    pagination: 1
+    pagination: 1,
+    hasFavourites: false
   },
   reducers: {
     addItems: (state, action) => {
@@ -25,6 +26,7 @@ export const itemsSlice = createSlice({
         }
         return item
       })
+      state.hasFavourites = state.list.some(i => i.isFav)
     },
     findItems: (state, action) => {
       state.searchedWord = action.payload
