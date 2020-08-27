@@ -15,6 +15,7 @@ import { normalizeItems } from './services/normalizeItems'
 function App() {
   const dispatch = useDispatch()
   const attributes = ['title', 'description', 'price', 'email']
+  // const attributes = ['título', 'descripción', 'precio', 'email']
   useEffect(() => {
     getItems()
       .then(res => {
@@ -26,13 +27,17 @@ function App() {
   }, [])
 
   return (
-    <div>
-      <SearchBar searchOptions={attributes} isComplete={true} />
-      <Sorter sortOptions={attributes} />
-      <PriceRange />
+    <div className='z-0 relative'>
+      <div className='flex space-x-2 px-4 py-2'>
+        <SearchBar searchOptions={attributes} isComplete={true} />
+        <PriceRange />
+      </div>
       <Favourites />
-      <ItemsList isComplete={true} />
-      <Pagination />
+      <div className='px-4 py-2 bg-wallapop-gray'>
+        <Sorter sortOptions={attributes} />
+        <ItemsList isComplete={true} />
+        <Pagination />
+      </div>
     </div>
   )
 }
