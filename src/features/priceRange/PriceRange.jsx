@@ -1,33 +1,16 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import { useDispatch } from 'react-redux'
-import {
-  setMinPrice,
-  setMaxPrice
-} from './../itemsSlice'
+import { setMinPrice, setMaxPrice } from './../itemsSlice'
 
 const classnames = require('classnames')
 
 const PriceRange = () => {
   const [usedMinPrice, setUsedMinPrice] = useState(0)
-  const [usedMaxPrice, setUsedMaxPrice] = useState(undefined)
+  const [usedMaxPrice, setUsedMaxPrice] = useState('')
   const [showPriceRange, setShowPriceRange] = useState(false)
   const dispatch = useDispatch()
 
-  useEffect(() => {
-    dispatch(setMinPrice(Number(usedMinPrice)))
-  }, [usedMinPrice])
-
-  useEffect(() => {
-    if (!isNaN(usedMaxPrice)) {
-      dispatch(setMaxPrice(Number(usedMaxPrice)))
-    }
-  }, [usedMaxPrice])
-
-  const mainClasses = classnames(
-    'flex',
-    'relative',
-    'p-1'
-  )
+  const mainClasses = classnames('flex', 'relative', 'p-1')
 
   const buttonClasses = classnames(
     'px-3',
@@ -39,7 +22,7 @@ const PriceRange = () => {
     'shadow-lg',
     'rounded-full',
     'items-center',
-    'hover:bg-wallapop-gray'
+    'hover:bg-wallapop-gray',
   )
 
   const rangeClasses = classnames(
@@ -54,7 +37,7 @@ const PriceRange = () => {
     'rounded-lg',
     'space-x-2',
     'border',
-    'border-wallapop-main'
+    'border-wallapop-main',
   )
 
   const rangeOptionsClasses = classnames(
@@ -62,7 +45,7 @@ const PriceRange = () => {
     'flex-col',
     'space-y-2',
     'w-24',
-    'font-light'
+    'font-light',
   )
 
   const rangeInputClasses = classnames(
@@ -71,19 +54,32 @@ const PriceRange = () => {
     'rounded-lg',
     'px-3',
     'py-1',
-    'font-light'
+    'font-light',
   )
 
   return (
     <div className={mainClasses}>
-      <button onClick={() => setShowPriceRange(!showPriceRange)} className={buttonClasses}>
-        <svg className='h-5 w-5 stroke-current' xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14.121 15.536c-1.171 1.952-3.07 1.952-4.242 0-1.172-1.953-1.172-5.119 0-7.072 1.171-1.952 3.07-1.952 4.242 0M8 10.5h4m-4 3h4m9-1.5a9 9 0 11-18 0 9 9 0 0118 0z" />
+      <button
+        onClick={() => setShowPriceRange(!showPriceRange)}
+        className={buttonClasses}
+      >
+        <svg
+          className='h-5 w-5 stroke-current'
+          xmlns='http://www.w3.org/2000/svg'
+          fill='none'
+          viewBox='0 0 24 24'
+          stroke='currentColor'
+        >
+          <path
+            strokeLinecap='round'
+            strokeLinejoin='round'
+            strokeWidth={2}
+            d='M14.121 15.536c-1.171 1.952-3.07 1.952-4.242 0-1.172-1.953-1.172-5.119 0-7.072 1.171-1.952 3.07-1.952 4.242 0M8 10.5h4m-4 3h4m9-1.5a9 9 0 11-18 0 9 9 0 0118 0z'
+          />
         </svg>
         <p>Price</p>
       </button>
-      {
-        showPriceRange &&
+      {showPriceRange && (
         <div className={rangeClasses}>
           <div className={rangeOptionsClasses}>
             <label htmlFor='range-from'>From:</label>
@@ -96,22 +92,29 @@ const PriceRange = () => {
               value={usedMinPrice}
               onChange={(e) => {
                 setUsedMinPrice(e.target.value)
-              }} />
+                dispatch(setMinPrice(Number(e.target.value)))
+              }}
+            />
           </div>
           <div className={rangeOptionsClasses}>
             <label htmlFor='range-to'>To:</label>
-              <input
-                type='number'
-                name='range-to'
-                className={rangeInputClasses}
-                min={usedMinPrice}
-                value={usedMaxPrice}
-                onChange={(e) => {
-                  setUsedMaxPrice(e.target.value)
-                }} />
-            </div>
+            <input
+              type='number'
+              name='range-to'
+              className={rangeInputClasses}
+              min={usedMinPrice}
+              max={Number.MAX_SAFE_INTEGER}
+              value={usedMaxPrice}
+              onChange={(e) => {
+                setUsedMaxPrice(e.target.value)
+                if (!isNaN(e.target.value)) {
+                  dispatch(setMaxPrice(Number(e.target.value)))
+                }
+              }}
+            />
+          </div>
         </div>
-      }
+      )}
     </div>
   )
 }

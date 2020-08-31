@@ -1,11 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import _ from 'lodash'
-import {
-  findItems,
-  addItems,
-  findFavouriteItems
-} from './../itemsSlice'
+import { startCase } from 'lodash'
+import { findItems, addItems, findFavouriteItems } from './../itemsSlice'
 import searchItems from '../../services/searchItems'
 
 const classnames = require('classnames')
@@ -14,7 +10,9 @@ const SearchBar = ({ isComplete, searchOptions }) => {
   const [inputSearchValue, setInputSearchValue] = useState('')
   const [searchBy, setSearchBy] = useState('title')
   const [showByOptions, setShowByOptions] = useState(false)
-  const searchedWord = useSelector((state) => isComplete ? state.items.searchedWord : state.items.favouritesSearchedWord)
+  const searchedWord = useSelector((state) =>
+    isComplete ? state.items.searchedWord : state.items.favouritesSearchedWord,
+  )
   const itemsList = useSelector((state) => state.items.list)
   const dispatch = useDispatch()
 
@@ -26,9 +24,15 @@ const SearchBar = ({ isComplete, searchOptions }) => {
 
   const updateSearch = () => {
     if (isComplete) {
-      searchTimeout = window.setTimeout(() => dispatch(findItems(inputSearchValue)), 500)
+      searchTimeout = window.setTimeout(
+        () => dispatch(findItems(inputSearchValue)),
+        500,
+      )
     } else {
-      searchTimeout = window.setTimeout(() => dispatch(findFavouriteItems(inputSearchValue)), 500)
+      searchTimeout = window.setTimeout(
+        () => dispatch(findFavouriteItems(inputSearchValue)),
+        500,
+      )
     }
   }
 
@@ -50,7 +54,7 @@ const SearchBar = ({ isComplete, searchOptions }) => {
     'text-gray-800',
     'font-light',
     'rounded-r-full',
-    'items-center'
+    'items-center',
   )
 
   const searchBarClasses = classnames(
@@ -77,7 +81,7 @@ const SearchBar = ({ isComplete, searchOptions }) => {
     'shadow-xl',
     'rounded-lg',
     'border',
-    'border-wallapop-main'
+    'border-wallapop-main',
   )
 
   const optionButtonClasses = classnames(
@@ -88,7 +92,7 @@ const SearchBar = ({ isComplete, searchOptions }) => {
     'px-3',
     'py-1',
     'bg-wallapop-main',
-    'hover:bg-wallapop-hover-dark'
+    'hover:bg-wallapop-hover-dark',
   )
 
   useEffect(() => {
@@ -96,43 +100,67 @@ const SearchBar = ({ isComplete, searchOptions }) => {
   }, [inputSearchValue])
 
   useEffect(() => {
-    const updatedItems = searchItems(itemsList, searchBy, searchedWord, isComplete)
+    const updatedItems = searchItems(
+      itemsList,
+      searchBy,
+      searchedWord,
+      isComplete,
+    )
     dispatch(addItems(updatedItems))
   }, [searchedWord, searchBy])
 
   return (
     <div className={mainClasses}>
       <div className={searchBarClasses}>
-        <svg className='h-5 w-5 text-wallapop-main stroke-current' xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+        <svg
+          className='h-5 w-5 text-wallapop-main stroke-current'
+          xmlns='http://www.w3.org/2000/svg'
+          fill='none'
+          viewBox='0 0 24 24'
+          stroke='currentColor'
+        >
+          <path
+            strokeLinecap='round'
+            strokeLinejoin='round'
+            strokeWidth={2}
+            d='M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z'
+          />
         </svg>
-        <input type='text' placeholder='Search...' value={inputSearchValue} onChange={(e) => editSearchValue(e.target.value)}/>
-        {
-          isComplete &&
+        <input
+          type='text'
+          name='search-bar'
+          placeholder='Search...'
+          value={inputSearchValue}
+          onChange={(e) => editSearchValue(e.target.value)}
+        />
+        {isComplete && (
           <div className='relative'>
-            <button onClick={() => setShowByOptions(!showByOptions)} className={mainButtonClasses}>By: {_.startCase(searchBy)}</button>
-            {
-              showByOptions &&
+            <button
+              onClick={() => setShowByOptions(!showByOptions)}
+              className={mainButtonClasses}
+            >
+              By: {startCase(searchBy)}
+            </button>
+            {showByOptions && (
               <div className={optionsListClasses}>
-                {
-                  searchOptions.map((item, i) => {
-                    return (
-                      <button
-                        className={optionButtonClasses}
-                        key={`search-by-${i}`}
-                        onClick={() => {
-                          setSearchBy(item)
-                          setShowByOptions(!showByOptions)
-                        } }>
-                        {_.startCase(item)}
-                      </button>
-                    )
-                  })
-                }
+                {searchOptions.map((item, i) => {
+                  return (
+                    <button
+                      className={optionButtonClasses}
+                      key={`search-by-${i}`}
+                      onClick={() => {
+                        setSearchBy(item)
+                        setShowByOptions(!showByOptions)
+                      }}
+                    >
+                      {startCase(item)}
+                    </button>
+                  )
+                })}
               </div>
-            }
+            )}
           </div>
-        }
+        )}
       </div>
     </div>
   )

@@ -8,25 +8,28 @@ export const itemsSlice = createSlice({
     favouritesSearchedWord: '',
     sortedSettings: {
       by: 'title',
-      order: 'ascending'
+      order: 'ascending',
     },
     minPrice: 0,
-    maxPrice: undefined,
+    maxPrice: Number.MAX_SAFE_INTEGER,
     pagination: 1,
-    hasFavourites: false
+    hasFavourites: false,
   },
   reducers: {
     addItems: (state, action) => {
-      state.list = action.payload
+      state.list = action.payload.map((item, i) => {
+        item.isDisplayed = i + 1 <= state.pagination * 5
+        return item
+      })
     },
     toggleItemToFavs: (state, action) => {
-      state.list = [...state.list].map(item => {
+      state.list = [...state.list].map((item) => {
         if (action.payload === item.title) {
           item.isFav = !item.isFav
         }
         return item
       })
-      state.hasFavourites = state.list.some(i => i.isFav)
+      state.hasFavourites = state.list.some((i) => i.isFav)
     },
     findItems: (state, action) => {
       state.searchedWord = action.payload
@@ -35,7 +38,10 @@ export const itemsSlice = createSlice({
       state.favouritesSearchedWord = action.payload
     },
     changeSortedSettings: (state, action) => {
-      state.sortedSettings = { by: action.payload.by, order: action.payload.order }
+      state.sortedSettings = {
+        by: action.payload.by,
+        order: action.payload.order,
+      }
     },
     setMinPrice: (state, action) => {
       state.minPrice = action.payload
@@ -43,8 +49,14 @@ export const itemsSlice = createSlice({
     setMaxPrice: (state, action) => {
       state.maxPrice = action.payload === 0 ? undefined : action.payload
     },
-    loadMore: state => { state.pagination += 1 }
-  }
+    loadMore: (state) => {
+      state.pagination += 1
+      state.list = state.list.map((item, i) => {
+        item.isDisplayed = i + 1 <= (state.pagination + 1) * 5
+        return item
+      })
+    },
+  },
 })
 
 export const {
@@ -55,7 +67,7 @@ export const {
   changeSortedSettings,
   setMinPrice,
   setMaxPrice,
-  loadMore
+  loadMore,
 } = itemsSlice.actions
 
 export default itemsSlice.reducer

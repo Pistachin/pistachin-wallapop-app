@@ -1,15 +1,23 @@
-import _ from 'lodash'
+import { cloneDeep } from 'lodash'
 
-const sortItems = (by, order, list) => {
+const sortItems = (sortedBy, order, list) => {
   if (list.length > 0) {
-    return _.cloneDeep(list).sort((a, b) => {
-      const aValue = by !== 'price' ? a[by].toLowerCase() : Number(a[by])
-      const bValue = by !== 'price' ? b[by].toLowerCase() : Number(b[by])
-      if (aValue > bValue) {
-        return order === 'descending' ? -1 : 1
-      }
-      if (aValue < bValue) {
-        return order === 'descending' ? 1 : -1
+    return cloneDeep(list).sort((firstItem, secondItem) => {
+      if (firstItem.isDisplayed && secondItem.isDisplayed) {
+        const firstItemValue =
+          sortedBy !== 'price'
+            ? firstItem[sortedBy].toLowerCase()
+            : Number(firstItem[sortedBy])
+        const secondItemValue =
+          sortedBy !== 'price'
+            ? secondItem[sortedBy].toLowerCase()
+            : Number(secondItem[sortedBy])
+        if (firstItemValue > secondItemValue) {
+          return order === 'descending' ? -1 : 1
+        }
+        if (secondItemValue > firstItemValue) {
+          return order === 'descending' ? 1 : -1
+        }
       }
       return 0
     })

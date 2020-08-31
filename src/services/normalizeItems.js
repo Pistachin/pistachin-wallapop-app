@@ -1,5 +1,5 @@
-export const normalizeItems = (items) => {
-  const normalizedItems = items.map(item => {
+const normalizeItems = (items) => {
+  const normalizedItems = items.map((item) => {
     item.description = item.description || ''
     item.email = item.email || ''
     item.image = item.image || ''
@@ -12,3 +12,5 @@ export const normalizeItems = (items) => {
   })
   return normalizedItems
 }
+
+export default normalizeItems
