@@ -25,11 +25,13 @@ function App() {
 
   return (
     <div className='z-0 relative'>
-      <nav className='flex space-x-2 px-4 py-2'>
+      <nav className='relative flex flex-col md:flex-row md:space-x-2 px-4 py-2'>
         <SearchBar searchOptions={attributes} isComplete={true} />
         <PriceRange />
       </nav>
-      <Favourites />
+      <div className='w-full flex flex-col px-2 md:px-auto md:w-auto'>
+        <Favourites />
+      </div>
       <main className='px-4 py-2 bg-wallapop-gray'>
         <Sorter sortOptions={attributes} />
         <ItemsList isComplete={true} />

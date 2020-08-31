@@ -15,7 +15,9 @@ const ItemsList = ({ isComplete }) => {
   const completeClasses = {
     ...defaultClasses,
     grid: true,
-    'grid-cols-4': true,
+    'grid-cols-1': true,
+    'md:grid-cols-2': true,
+    'lg:grid-cols-4': true,
     'gap-3': true,
     'px-8': true,
   }

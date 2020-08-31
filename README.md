@@ -1,3 +1,35 @@
+Hi, my name is Santiago Arcos, even though I usually go by Pistachin.
+
+Here's my technical test.
+
+For the sake of simplicity, I've left at the end of this Readme the text created by CRA.
+So, in case you are not used to React, you can check there how to use it.
+
+And yes, I've done this test using React with Redux, bootstrapping it with [Create React App](https://github.com/facebook/create-react-app).
+
+I think that the test is quite self-explanatory, but I'll add some of the reasons as tho why
+I did something, didn't do it, or struggles that I found.
+
+I chose React and Redux due to the fact that I'm used to it.
+
+For styles, I chose Tailwind due to it's simplicity, and considering that it is a robust Framework
+that will ensure good and compatible CSS.
+
+As with any project, there were some struggles and some things that felt really fun to do,
+so I'll point out one of each.
+
+One of the struggles was the testing, I've worked in teams and companies that encourage (and
+sometimes enforce) testing, which is why I know how to use them, but in my current company
+there's "no time" for testing, thus I needed to double check some things. I'll add that since
+I've been working without tests, I've started to value them even more.
+
+And one of the fun parts was the definition of all the services. I enjoy quite a bit writting
+logic, so that was my favourite part.
+
+Without further ado, I hope you enjoy reviewing this as much as I did doing it.
+
+Santiago 'Pistachin' Arcos
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app), using the [Redux](https://redux.js.org/) and [Redux Toolkit](https://redux-toolkit.js.org/) template.
 
 ## Available Scripts

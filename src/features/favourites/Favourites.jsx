@@ -8,30 +8,32 @@ const Favourites = () => {
   const [showFavourites, setShowFavourites] = useState(false)
   const hasFavourites = useSelector((state) => state.items.hasFavourites)
   const favouritesClasses = classnames(
-    'flex',
-    'flex-col',
-    'absolute',
     'bg-gray-200',
-    'mx-4',
-    'my-2',
-    'right-0',
-    'rounded',
-    { 'shadow-lg': showFavourites },
-    'top-0',
-    'z-10',
-    'p-2',
-    'max-h-1/3',
-    'max-w-1/4',
-    'transition',
     'duration-500',
-    { 'w-auto': !showFavourites },
-    { 'w-1/4': showFavourites },
-    { border: showFavourites },
-    { 'border-gray-600': showFavourites },
+    'flex-col',
+    'flex',
+    'md:absolute',
+    'md:max-h-1/3',
+    'md:max-w-1/4',
+    'mx-2',
+    'md:right-0',
+    'md:top-0',
+    'my-2',
     'overflow-y-auto',
+    'p-2',
+    'rounded',
+    'transition',
+    'w-10',
+    'md:z-10',
+    { 'border-gray-600': showFavourites },
+    { 'md:w-1/4': showFavourites },
+    { 'md:w-auto': !showFavourites },
+    { 'shadow-lg': showFavourites },
+    { 'w-auto': showFavourites },
+    { border: showFavourites },
   )
 
-  const titleClasses = classnames('flex', 'space-x-2', {
+  const titleClasses = classnames('flex', 'md:space-x-2', {
     'mb-3': showFavourites,
   })
 
